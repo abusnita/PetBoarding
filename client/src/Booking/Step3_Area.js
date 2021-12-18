@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { CustomerContext } from "../Reducers/CustomerReducer";
+import { PetBoardingContext } from "../PetBoardingContext";
 
 const Step3_Area = () => {
   const initialArea = {
@@ -13,7 +13,8 @@ const Step3_Area = () => {
   const [area, setArea] = useState(initialArea);
 
   const history = useHistory();
-  const { bookingCriteria, setBookingCriteria } = useContext(CustomerContext);
+  const { bookingCriteria, setBookingCriteria } =
+    useContext(PetBoardingContext);
 
   const updateArea = (e) => {
     setArea({ ...area, [e.target.id]: e.target.value });
@@ -26,7 +27,6 @@ const Step3_Area = () => {
       "bookingCriteria",
       JSON.stringify(bookingCriteria)
     );
-    console.log(bookingCriteria);
     history.push("/Step4_Dates");
   };
 
@@ -78,11 +78,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  padding-top: 15px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  min-height: 100vh;
+  margin-left: 800px;
 `;
 
 const Button = styled.button`
@@ -98,7 +95,6 @@ const Button = styled.button`
   transition: 200ms ease;
   cursor: pointer;
   &:hover {
-    //background-color: var(--color-hover);
     transform: scale(1.1);
     font-size: 15px;
   }
@@ -111,7 +107,7 @@ const Label = styled.label`
   font-weight: bold;
   display: flex;
   color: black;
-  width: 400px;
+  width: 500px;
 `;
 const Input = styled.input`
   width: 200px;
@@ -124,15 +120,19 @@ const Input = styled.input`
 `;
 const Title = styled.div`
   display: flex;
+  font-size: 28px;
+  font-style: italic;
+  font-weight: bold;
+  color: var(--color-ming);
   justify-content: center;
-  width: 400px;
-  margin-top: 20px;
+  width: 500px;
+  margin-bottom: 10px;
 `;
 const P = styled.p`
   color: grey;
   font-size: 14px;
   font-style: italic;
-  width: 400px;
+  width: 500px;
   text-align: center;
   padding-bottom: 10px;
 `;
@@ -140,10 +140,9 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 400px;
 `;
 const Bottom = styled.div`
   display: flex;
   justify-content: center;
-  width: 400px;
+  width: 500px;
 `;

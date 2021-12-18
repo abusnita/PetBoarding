@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { CustomerContext } from "./Reducers/CustomerReducer";
+import { PetBoardingContext } from "./PetBoardingContext";
 
 const ServiceProviderInfo = () => {
   const initialServiceInfo = {
@@ -23,12 +23,12 @@ const ServiceProviderInfo = () => {
       },
     },
   };
-  //const [numberOfPets, setNumberOfPets] = useState(0);
+
   const [serviceInfo, setServiceInfo] = useState(initialServiceInfo);
   const [serviceType, setServiceType] = useState([]);
 
   const history = useHistory();
-  const { signedInUser } = useContext(CustomerContext);
+  const { signedInUser } = useContext(PetBoardingContext);
   const handleInfo = (event) => {
     setServiceInfo({ ...serviceInfo, [event.target.id]: event.target.value });
   };
@@ -36,7 +36,6 @@ const ServiceProviderInfo = () => {
     setServiceType((serviceType) => [...serviceType, e.target.value]);
   };
   const updateCats = (event) => {
-    //console.log(event.target.value);
     setServiceInfo({
       ...serviceInfo,
       capabilities: {
@@ -49,7 +48,6 @@ const ServiceProviderInfo = () => {
     });
   };
   const updateDogs = (event) => {
-    //console.log(event.target.value);
     setServiceInfo({
       ...serviceInfo,
       capabilities: {
@@ -62,7 +60,6 @@ const ServiceProviderInfo = () => {
     });
   };
   const updateOther = (event) => {
-    //console.log(event.target.value);
     setServiceInfo({
       ...serviceInfo,
       capabilities: {
@@ -74,7 +71,7 @@ const ServiceProviderInfo = () => {
       },
     });
   };
-  //console.log(signedInUser);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -92,9 +89,8 @@ const ServiceProviderInfo = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.status === 200) {
-          history.push("/Profile");
+          history.push("/");
         } else {
           return <h1>An error has occured. Please check the info provided</h1>;
         }
@@ -105,12 +101,10 @@ const ServiceProviderInfo = () => {
     setServiceInfo(initialServiceInfo);
   };
 
-  //console.log(petLibrary);
-
   return (
     <Wrapper>
       <Form onSubmit={handleSubmit}>
-        <FormTitle>SERVICE PROVIDER INFO</FormTitle>
+        <MainTitle>SERVICE PROVIDER INFO</MainTitle>
         <Top>
           <Label>
             Company:
@@ -124,7 +118,7 @@ const ServiceProviderInfo = () => {
           </Label>
         </Top>
         <Middle>
-          <ServiceTitle>What kind of service are you providing?</ServiceTitle>
+          <Title>What kind of service are you providing?</Title>
           <CheckBoxes>
             <ServiceType
               type="checkbox"
@@ -147,84 +141,82 @@ const ServiceProviderInfo = () => {
         </Middle>
         <Bottom>
           <Capabilities>
-            <Title>Capabilities</Title>
-            <Label>
-              Cats:
-              <DropDown
-                onChange={updateCats}
-                id="max"
-                value={serviceInfo.capabilities.cats.max}
-                required
-              >
-                {/* <option style={{ color: "grey" }} selected disabled value="">
-                  Max capacity
-                </option> */}
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </DropDown>
-            </Label>
-            <Label>
-              Dogs:
-              <DropDown
-                onChange={updateDogs}
-                id="max"
-                value={serviceInfo.capabilities.dogs.max}
-                required
-              >
-                {/* <option style={{ color: "grey" }} selected disabled value="">
-                  Max capacity
-                </option> */}
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </DropDown>
-            </Label>
-            <Label>
-              Other:
-              <DropDown
-                onChange={updateOther}
-                id="yesNo"
-                value={serviceInfo.capabilities.other.yesNo}
-                required
-              >
-                <option style={{ color: "grey" }} selected disabled value="">
-                  No max capacity
-                </option>
-                <option value="no">no</option>
-                <option value="yes">yes</option>
-              </DropDown>
-            </Label>
+            <TitleBottom>Capabilities</TitleBottom>
+            <Container>
+              <Label>
+                Cats:
+                <DropDown
+                  onChange={updateCats}
+                  id="max"
+                  value={serviceInfo.capabilities.cats.max}
+                  required
+                >
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </DropDown>
+              </Label>
+              <Label>
+                Dogs:
+                <DropDown
+                  onChange={updateDogs}
+                  id="max"
+                  value={serviceInfo.capabilities.dogs.max}
+                  required
+                >
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </DropDown>
+              </Label>
+              <Label>
+                Other:
+                <DropDown
+                  onChange={updateOther}
+                  id="yesNo"
+                  value={serviceInfo.capabilities.other.yesNo}
+                  required
+                >
+                  <option style={{ color: "grey" }} selected disabled value="">
+                    No max capacity
+                  </option>
+                  <option value="no">no</option>
+                  <option value="yes">yes</option>
+                </DropDown>
+              </Label>
+            </Container>
           </Capabilities>
           <Price>
-            <Title>Price per animal per day</Title>
-            <Input
-              type="text"
-              placeholder="Price per cat"
-              id="price"
-              value={serviceInfo.capabilities.cats.price}
-              onChange={updateCats}
-            />
-            <Input
-              type="text"
-              placeholder="Price per dog"
-              id="price"
-              value={serviceInfo.capabilities.dogs.price}
-              onChange={updateDogs}
-            />
-            <Input
-              type="text"
-              placeholder="Price per other"
-              id="price"
-              value={serviceInfo.capabilities.other.price}
-              onChange={updateOther}
-            />
+            <TitleBottom>Price per animal per day</TitleBottom>
+            <Container>
+              <Input
+                type="text"
+                placeholder="Price per cat"
+                id="price"
+                value={serviceInfo.capabilities.cats.price}
+                onChange={updateCats}
+              />
+              <Input
+                type="text"
+                placeholder="Price per dog"
+                id="price"
+                value={serviceInfo.capabilities.dogs.price}
+                onChange={updateDogs}
+              />
+              <Input
+                type="text"
+                placeholder="Price per other"
+                id="price"
+                value={serviceInfo.capabilities.other.price}
+                onChange={updateOther}
+              />
+            </Container>
           </Price>
         </Bottom>
         <Buttons>
@@ -242,42 +234,68 @@ export default ServiceProviderInfo;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding-left: 30px;
-  //position: fixed;
-  padding-top: 15px;
-  /* left: 50%;
-    transform: translate(-50%, -50%); */
+  min-height: 100vh;
+  margin-top: 200px;
+  margin-left: 400px;
 `;
-const FormTitle = styled.div`
+const Title = styled.div`
   display: flex;
+  font-size: 28px;
+  padding-left: 30px;
+  padding-bottom: 30px;
+  font-style: italic;
+  font-weight: bold;
+  color: var(--color-ming);
+  justify-content: flex-start;
+  width: 500px;
+  margin-bottom: 10px;
+`;
+
+const MainTitle = styled.div`
+  display: flex;
+  font-size: 28px;
+  padding-left: 30px;
+  padding-bottom: 40px;
+  font-style: italic;
+  font-weight: bold;
+  color: var(--color-ming);
+  justify-content: flex-start;
+  width: 400px;
+  margin-bottom: 10px;
+  margin-left: 260px;
+`;
+
+const TitleBottom = styled.div`
+  display: flex;
+  font-size: 28px;
+
+  padding-bottom: 20px;
+  font-style: italic;
+  font-weight: bold;
+  color: var(--color-ming);
   justify-content: center;
-  font-size: 24px;
-  width: 440px;
-  margin-bottom: 40px;
+  width: 300px;
 `;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  //align-content: flex-end;
-  //justify-content: center;
-  align-items: flex-end;
-  //position: relative;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Label = styled.label`
-  //font-family: var(--font-family);
   font-size: 14px;
   align-items: center;
   font-weight: bold;
   display: flex;
   color: black;
+  width: 80%;
+  justify-content: flex-end;
 `;
 
 const CheckboxLabel = styled.label`
-  //font-family: var(--font-family);
   font-size: 14px;
   align-items: center;
   font-weight: bold;
@@ -286,33 +304,22 @@ const CheckboxLabel = styled.label`
   margin-right: 20px;
 `;
 
-const ServiceTitle = styled.div`
+const Container = styled.div`
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
   justify-content: center;
-  width: 350px;
-  padding-bottom: 5px;
-  margin-top: 20px;
-`;
-
-const Title = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 230px;
-  padding-bottom: 5px;
-  margin-top: 20px;
 `;
 const CheckBoxes = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
   justify-content: center;
-  width: 360px;
+  width: 500px;
 `;
 const ServiceType = styled.input`
-  //padding-right: 20px;
   margin-right: 10px;
-
-  //position: relative;
 `;
 const Input = styled.input`
   width: 200px;
@@ -321,7 +328,6 @@ const Input = styled.input`
   margin: 5px;
   font-size: 14px;
   border-radius: 5px;
-  //position: relative;
   border: 1px solid grey;
 `;
 const DropDown = styled.select`
@@ -341,6 +347,7 @@ const Buttons = styled.div`
   width: 460px;
   margin-top: 10px;
   justify-content: center;
+  margin-left: 240px;
 `;
 
 const Submit = styled.button`
@@ -357,8 +364,7 @@ const Submit = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: var(--color-orange);
-    //color: grey;
+    background-color: var(--color-hover);
   }
 `;
 const Clear = styled.button`
@@ -381,26 +387,37 @@ const Clear = styled.button`
 `;
 const Top = styled.div`
   display: flex;
-  width: 500px;
+  width: 380px;
   justify-content: center;
   margin-bottom: 20px;
+  margin-left: 200px;
 `;
 const Middle = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 400px;
+  width: 500px;
+  margin-left: 300px;
 `;
 const Bottom = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 300px;
 `;
 const Capabilities = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  height: 250px;
+  width: 40%;
   align-items: flex-end;
+  margin-right: 40px;
 `;
 const Price = styled.div`
   display: flex;
   flex-direction: column;
+  height: 250px;
+  width: 40%;
   align-items: flex-end;
 `;

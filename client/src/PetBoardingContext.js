@@ -1,18 +1,8 @@
 import React, { createContext, useState } from "react";
 
-export const CustomerContext = createContext();
-//const persistedState = "";
+export const PetBoardingContext = createContext();
 
-// const reducer = (state, action) => {
-//   switch (
-//     action.type
-//     // case "sign-in":
-//     //   return { ...state, signedInUser: action.user };
-//   ) {
-//   }
-// };
-
-export const CustomerProvider = ({ children }) => {
+export const PetBoardingProvider = ({ children }) => {
   const [signedInUser, setSignedInUser] = useState(() => {
     return window.sessionStorage.getItem("signedInUser")
       ? JSON.parse(window.sessionStorage.getItem("signedInUser"))
@@ -48,17 +38,9 @@ export const CustomerProvider = ({ children }) => {
       ? JSON.parse(sessionStorage.getItem("reservation"))
       : null;
   });
-  //const [user, dispatch] = useReducer(reducer, signedInUser);
-
-  // const signIn = (user) => {
-  //   dispatch({
-  //     type: "sign-in",
-  //     user: user,
-  //   });
-  // };
 
   return (
-    <CustomerContext.Provider
+    <PetBoardingContext.Provider
       value={{
         signedInUser,
         setSignedInUser,
@@ -75,6 +57,6 @@ export const CustomerProvider = ({ children }) => {
       }}
     >
       {children}
-    </CustomerContext.Provider>
+    </PetBoardingContext.Provider>
   );
 };

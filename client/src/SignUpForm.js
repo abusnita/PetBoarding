@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { CustomerContext } from "./Reducers/CustomerReducer";
+import { PetBoardingContext } from "./PetBoardingContext";
 
 const SignUpForm = () => {
   const initialUserInfo = {
@@ -21,7 +21,7 @@ const SignUpForm = () => {
     },
     confirmPassword: "",
   };
-  const { setSignedInUser, userType } = useContext(CustomerContext);
+  const { setSignedInUser, userType } = useContext(PetBoardingContext);
   const [userInfo, setUserInfo] = useState(initialUserInfo);
 
   const history = useHistory();
@@ -29,7 +29,6 @@ const SignUpForm = () => {
     setUserInfo({ ...userInfo, [event.target.id]: event.target.value });
   };
   const handleAddress = (event) => {
-    //console.log(event.target.value);
     setUserInfo({
       ...userInfo,
       address: {
@@ -48,7 +47,6 @@ const SignUpForm = () => {
   };
 
   const handleAccount = (event) => {
-    //console.log(event.target.value);
     setUserInfo({
       ...userInfo,
       account: {
@@ -98,7 +96,6 @@ const SignUpForm = () => {
           } else {
             history.push("/PetRegistration");
           }
-          //console.log("after clear: ", userInfo);
         }
       });
   };
@@ -109,6 +106,7 @@ const SignUpForm = () => {
 
   return (
     <Wrapper>
+      <Title>Please enter account information below:</Title>
       <Form onSubmit={handleSubmit}>
         <Label>
           First Name:
@@ -251,28 +249,32 @@ export default SignUpForm;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding-left: 30px;
-  height: calc(100vh - 120px);
-  //position: fixed;
-  padding-top: 15px;
-  /* left: 50%;
-  transform: translate(-50%, -50%); */
+  min-height: 100vh;
+  margin-left: 700px;
+  margin-top: 150px;
 `;
-
+const Title = styled.div`
+  display: flex;
+  font-size: 28px;
+  padding-left: 30px;
+  padding-bottom: 40px;
+  font-style: italic;
+  font-weight: bold;
+  color: var(--color-ming);
+  justify-content: center;
+  width: 500px;
+  margin-bottom: 10px;
+`;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  //align-content: flex-end;
-  //justify-content: center;
   align-items: flex-end;
-  //position: relative;
 `;
 
 const Label = styled.label`
-  //font-family: var(--font-family);
   font-size: 14px;
   align-items: center;
   font-weight: bold;
@@ -280,7 +282,6 @@ const Label = styled.label`
   color: black;
 `;
 const AddressLabel = styled.label`
-  //font-family: var(--font-family);
   font-size: 14px;
   align-items: top;
   font-weight: bold;
@@ -299,7 +300,6 @@ const Input = styled.input`
   margin: 5px;
   font-size: 14px;
   border-radius: 5px;
-  //position: relative;
   border: 1px solid grey;
 `;
 
@@ -338,24 +338,5 @@ const Button = styled.button`
 
   &:hover {
     background-color: var(--color-hover);
-    //color: grey;
   }
 `;
-// const Clear = styled.button`
-//   height: 30px;
-//   width: 90px;
-//   margin: 5px;
-//   border-radius: 5px;
-//   font-size: 14px;
-//   font-weight: bold;
-//   border: none;
-//   color: white;
-//   background-color: var(--color-buttons);
-//   transition: 400ms ease;
-//   cursor: pointer;
-
-//   &:hover {
-//     background-color: var(--color-hover);
-//     //color: grey;
-//   }
-// `;

@@ -1,10 +1,9 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { CustomerContext } from "../Reducers/CustomerReducer";
+import { PetBoardingContext } from "../PetBoardingContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
 import addDays from "date-fns/addDays";
 
 const Step4_Dates = () => {
@@ -13,34 +12,21 @@ const Step4_Dates = () => {
     end: "",
   };
 
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
   const [dates, setDates] = useState(initialDates);
   const history = useHistory();
   const { bookingCriteria, setBookingCriteria, setMatches } =
-    useContext(CustomerContext);
+    useContext(PetBoardingContext);
 
   const handleStartDate = (date) => {
-    //setStartDate(moment(date).format("MMMM Do YYYY"));
     setDates({ ...dates, start: date });
   };
 
   const handleEndDate = (date) => {
-    //setStartDate(moment(date).format("MMMM Do YYYY"));
     setDates({ ...dates, end: date });
   };
 
-  // console.log(dates);
-
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    // setBookingCriteria({ ...bookingCriteria, dates: dates });
-    // window.sessionStorage.setItem(
-    //   "bookingCriteria",
-    //   JSON.stringify(bookingCriteria)
-    // );
-    //console.log(bookingCriteria);
-    // history.push("/Step4_Dates");
     setBookingCriteria({ ...bookingCriteria, dates: dates });
     fetch("/bookingCriteria/matches/", {
       method: "POST",
@@ -54,19 +40,13 @@ const Step4_Dates = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-
-        //console.log(bookingCriteria);
         if (data.status === 200) {
-          console.log(data.data);
           setMatches(data.data);
           window.sessionStorage.setItem("matches", JSON.stringify(data.data));
-
           window.sessionStorage.setItem(
             "bookingCriteria",
             JSON.stringify(bookingCriteria)
           );
-          console.log("success");
           history.push("/matches");
         } else {
           return <h1>An error has occured. Please check the info provided</h1>;
@@ -86,9 +66,6 @@ const Step4_Dates = () => {
           minDate={new Date()}
           maxDate={addDays(new Date(), 7)}
           onChange={handleStartDate}
-          //   onChange={(date) =>
-          //     setStartDate(moment(date).format("dddd MMMM Do YYYY"))
-          //   }
         />
         <Label>End Date:</Label>
         <DatePicker
@@ -98,9 +75,6 @@ const Step4_Dates = () => {
           minDate={new Date()}
           maxDate={addDays(new Date(), 7)}
           onChange={handleEndDate}
-          //   onChange={(date) =>
-          //     setEndDate(moment(date).format("dddd MMMM Do YYYY"))
-          // }
         />
         <Button type="submit">Next</Button>
       </Form>
@@ -112,33 +86,33 @@ export default Step4_Dates;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 100px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  min-height: 100vh;
+  margin-left: 800px;
+  margin-top: 300px;
 `;
 
 const Title = styled.div`
   display: flex;
+  font-size: 28px;
+  font-style: italic;
+  padding-bottom: 40px;
+  font-weight: bold;
+  color: var(--color-ming);
   justify-content: center;
-  width: 500px;
-  margin-bottom: 20px;
-  font-size: 18px;
+  width: 600px;
+  margin-bottom: 10px;
 `;
 const Label = styled.div`
   font-size: 14px;
   min-width: 70px;
-  //height: 20px;
   display: flex;
   font-weight: bold;
   text-align: center;
   align-items: center;
-  //margin-right: 10px;
 `;
 const Form = styled.form`
   display: flex;
-  width: 500px;
+  width: 600px;
   align-content: center;
   justify-content: center;
 `;
@@ -155,7 +129,6 @@ const Button = styled.button`
   transition: 200ms ease;
   cursor: pointer;
   &:hover {
-    //background-color: var(--color-hover);
     transform: scale(1.1);
     font-size: 15px;
   }

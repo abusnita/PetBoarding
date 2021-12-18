@@ -1,13 +1,14 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { CustomerContext } from "../Reducers/CustomerReducer";
+import { PetBoardingContext } from "../PetBoardingContext";
 
 const Step2_Services = () => {
   const [service, setService] = useState("host");
 
   const history = useHistory();
-  const { bookingCriteria, setBookingCriteria } = useContext(CustomerContext);
+  const { bookingCriteria, setBookingCriteria } =
+    useContext(PetBoardingContext);
 
   const handleChange = (e) => {
     setService(e.target.value);
@@ -20,7 +21,6 @@ const Step2_Services = () => {
       "bookingCriteria",
       JSON.stringify(bookingCriteria)
     );
-    console.log(bookingCriteria);
     history.push("/Step3_Area");
   };
 
@@ -66,10 +66,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  min-height: 100vh;
+  margin-left: 800px;
 `;
 
 const Button = styled.button`
@@ -85,7 +83,6 @@ const Button = styled.button`
   transition: 200ms ease;
   cursor: pointer;
   &:hover {
-    //background-color: var(--color-hover);
     transform: scale(1.1);
     font-size: 15px;
   }
@@ -94,8 +91,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
-  width: 360px;
+  width: 500px;
 `;
 
 const CheckboxLabel = styled.label`
@@ -110,25 +106,28 @@ const CheckboxLabel = styled.label`
 
 const Title = styled.div`
   display: flex;
+  font-size: 28px;
+  padding-bottom: 40px;
+  font-style: italic;
+  font-weight: bold;
+  color: var(--color-ming);
   justify-content: center;
-  font-size: 20px;
-  width: 360px;
-  padding-bottom: 20px;
-  margin-top: 20px;
+  width: 500px;
+  margin-bottom: 10px;
 `;
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 360px;
+  width: 500px;
 `;
 const CheckBoxes = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
   justify-content: center;
-  width: 360px;
+  width: 500px;
 `;
 const ServiceType = styled.input`
   margin-right: 10px;
@@ -136,5 +135,5 @@ const ServiceType = styled.input`
 const Bottom = styled.div`
   display: flex;
   justify-content: center;
-  width: 360px;
+  width: 500px;
 `;

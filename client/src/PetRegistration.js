@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
-import { BiCopy } from "react-icons/bi";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { CustomerContext } from "./Reducers/CustomerReducer";
+import { PetBoardingContext } from "./PetBoardingContext";
 import { useHistory } from "react-router-dom";
 
 const PetRegistration = () => {
@@ -11,17 +10,16 @@ const PetRegistration = () => {
     age: "",
     breed: "",
   };
-  //const [numberOfPets, setNumberOfPets] = useState(0);
+
   const [petInfo, setPetInfo] = useState(initialPetInfo);
   const [petLibrary, setPetLibrary] = useState([]);
 
-  //let petLibrary = [1, 2, 3];
   const history = useHistory();
-  const { signedInUser } = useContext(CustomerContext);
+  const { signedInUser } = useContext(PetBoardingContext);
   const handleInfo = (event) => {
     setPetInfo({ ...petInfo, [event.target.id]: event.target.value });
   };
-  //console.log(signedInUser);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -40,7 +38,7 @@ const PetRegistration = () => {
       .then((data) => {
         console.log(data);
         if (data.status === 200) {
-          history.push("/Profile");
+          history.push("/");
         } else {
           return <h1>An error has occured. Please check the info provided</h1>;
         }
@@ -52,17 +50,12 @@ const PetRegistration = () => {
     setPetInfo(initialPetInfo);
   };
 
-  //console.log(petLibrary);
-
   return (
     <Wrapper>
       <Title>Time to meet your pet(s)!</Title>
       <Form onSubmit={handleSubmit}>
         <Label>
-          <div style={{ paddingTop: "13px" }}>
-            {/* Pet #{petLibrary.indexOf(pet) + 1}: */}
-            Pet info:
-          </div>
+          <div style={{ paddingTop: "13px" }}>Pet info:</div>
           <InputFields>
             <Input
               type="text"
@@ -117,35 +110,31 @@ export default PetRegistration;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding-left: 30px;
-  position: absolute;
-  padding-top: 15px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  min-height: 100vh;
+  margin-left: 800px;
+  margin-top: 200px;
 `;
 const Title = styled.div`
   display: flex;
+  font-size: 28px;
+  font-style: italic;
+  font-weight: bold;
+  color: var(--color-ming);
   justify-content: center;
-  font-size: 20px;
-  width: 220px;
-  padding-bottom: 20px;
-  margin-left: 50px;
+  width: 500px;
+  margin-bottom: 40px;
+  padding-left: 50px;
 `;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  //align-content: flex-end;
-  //justify-content: center;
   align-items: flex-end;
-  //position: relative;
 `;
 
 const Label = styled.label`
-  //font-family: var(--font-family);
   font-size: 14px;
   align-items: top;
   font-weight: bold;
@@ -164,7 +153,6 @@ const Input = styled.input`
   margin: 5px;
   font-size: 14px;
   border-radius: 5px;
-  //position: relative;
   border: 1px solid grey;
 `;
 
@@ -190,6 +178,5 @@ const Button = styled.button`
 
   &:hover {
     background-color: var(--color-hover);
-    //color: grey;
   }
 `;

@@ -1,18 +1,17 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { NavLink, useHistory } from "react-router-dom";
-import SignInForm from "./SignInForm";
-import { CustomerContext } from "../src/Reducers/CustomerReducer";
+import { useHistory } from "react-router-dom";
+import { PetBoardingContext } from "./PetBoardingContext";
 
-const CustomerSignIn = () => {
-  const { userType, setUserType } = useContext(CustomerContext);
+const SignInStart = () => {
+  const { userType, setUserType } = useContext(PetBoardingContext);
 
   const history = useHistory();
   const handleChange = (e) => {
-    window.sessionStorage.setItem("userType", JSON.stringify(userType));
     setUserType(e.target.value);
   };
   const handleClick = () => {
+    window.sessionStorage.setItem("userType", JSON.stringify(userType));
     history.push("/SignIn");
   };
   return (
@@ -51,18 +50,11 @@ const CustomerSignIn = () => {
 const Wrapper = styled.header`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  flex: 1 0 auto;
+  justify-content: flex-start;
   background: var(--color-honeydew);
-  margin-top: 20px;
-  height: calc(100vh - 120px);
-  //height: fit-content;
-  position: fixed;
-  //padding-top: 15px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  padding: var(--padding-page) 18px;
+  min-height: 100vh;
+  margin-left: 900px;
+  margin-top: 300px;
 `;
 
 const Title = styled.div`
@@ -115,4 +107,4 @@ const Bottom = styled.div`
   align-items: center;
 `;
 
-export default CustomerSignIn;
+export default SignInStart;

@@ -5,10 +5,12 @@ const {
   signUp,
   signIn,
   petRegistration,
-  updateProfile,
+  updateAvatar,
   addServiceInfo,
   findMatches,
   addReservation,
+  updateProfile,
+  getReservationsByUserId,
 } = require("./handlers");
 
 const PORT = 8000;
@@ -17,9 +19,11 @@ express()
   .use(express.json())
 
   .get("/customers", getCustomers)
+  .get("/reservations/:userId", getReservationsByUserId)
   .post("/signUp", signUp)
   .post("/signIn", signIn)
   .put("/petRegistration/:_id", petRegistration)
+  .put("/updateAvatar/:_id", updateAvatar)
   .put("/updateProfile/:_id", updateProfile)
   .put("/serviceProviderInfo/:_id", addServiceInfo)
   .post("/bookingCriteria/matches/", findMatches)

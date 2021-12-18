@@ -1,29 +1,22 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { NavLink, useHistory, useParams } from "react-router-dom";
-import SignInForm from "./SignInForm";
-import { CustomerContext } from "./Reducers/CustomerReducer";
-import DatePicker from "react-datepicker";
+import { useHistory, useParams } from "react-router-dom";
+import { PetBoardingContext } from "./PetBoardingContext";
 import moment from "moment";
 
 const ConfirmBooking = () => {
   const { matchId } = useParams();
-  const { userType, signedIn, matches, bookingCriteria, setSelectedMatch } =
-    useContext(CustomerContext);
+  const { userType, signedInUser, matches, bookingCriteria, setSelectedMatch } =
+    useContext(PetBoardingContext);
   const match = matches.find((provider) => provider._id === matchId);
   const {
     pets: { cats, dogs },
   } = bookingCriteria;
   const a = moment(bookingCriteria.dates.start);
   const b = moment(bookingCriteria.dates.end);
-  console.log(a);
-  console.log(b);
   const days = b.diff(a, "days") + 1;
 
-  console.log(days);
   const history = useHistory();
-  console.log(match);
-  console.log(bookingCriteria);
 
   const handleSubmit = () => {
     setSelectedMatch({
@@ -41,7 +34,7 @@ const ConfirmBooking = () => {
           Number(dogs) * days * match.capabilities.dogs.price,
       })
     );
-    if (signedIn && userType !== "host") {
+    if (signedInUser && userType !== "host") {
       history.push("/Payment");
     } else {
       history.push("/SignIn");
@@ -63,17 +56,17 @@ const ConfirmBooking = () => {
           <Bold>Pets:</Bold>
           <Value>
             {cats !== "" && (
-              <Cats>
+              <div>
                 {cats} cat
-                {Number(cats) > 1 && <p>s</p>}
-              </Cats>
+                {Number(cats) > 1 && <span>s</span>}
+              </div>
             )}
-            {cats !== "" && dogs !== "" && <p>, </p>}
+            {cats !== "" && dogs !== "" && <span>, </span>}
             {dogs !== "" && (
-              <Dogs>
+              <div>
                 {dogs} dog
-                {Number(dogs) > 1 && <p>s</p>}
-              </Dogs>
+                {Number(dogs) > 1 && <span>s</span>}
+              </div>
             )}
           </Value>
         </ValueWrapper>
@@ -159,25 +152,19 @@ const ConfirmBooking = () => {
 const Wrapper = styled.header`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  /* width: 300px;
-  top: 300px;
-  left: 400px; */
+  justify-content: flex-start;
+  align-items: flex-start;
   background: var(--color-cornsilk);
-  margin: 20px 40px;
-  //width: 300px;
-  //height: calc(100vh - 120px);
-  //height: fit-content;
-  //position: absolute;
-  //padding-top: 15px;
-  /* left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  padding: var(--padding-page) 18px; */
+  min-height: 100vh;
+  margin-left: 800px;
+  margin-top: 140px;
 `;
 const Title = styled.div`
   display: flex;
-  font-size: 20px;
+  font-size: 28px;
+  font-style: italic;
+  font-weight: bold;
+  color: var(--color-ming);
   justify-content: center;
   width: 500px;
   margin-bottom: 10px;
@@ -202,18 +189,15 @@ const P = styled.div`
 const Section = styled.div`
   display: flex;
   flex-direction: column;
-  //padding-right: 10px;
   flex: 1;
 `;
 const TotalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  //padding-right: 10px;
   flex: 1.6;
 `;
-const Cats = styled.div``;
-const Dogs = styled.div``;
+
 const ValueWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -223,7 +207,6 @@ const PricesWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
-
   flex: 1;
 `;
 const Value = styled.div`
@@ -236,8 +219,6 @@ const Value = styled.div`
 const Prices = styled.div`
   display: flex;
   justify-content: space-between;
-  //padding-left: 20px;
-  //flex: 1;
   font-size: 14px;
 `;
 const Total = styled.div`
@@ -269,11 +250,8 @@ const Button = styled.button`
     background-color: var(--color-hover);
   }
 `;
-
 const Bottom = styled.div`
-  //width: 300px;
   display: flex;
-  //justify-content: center;
   align-items: top;
 `;
 const ButtonSection = styled.div`

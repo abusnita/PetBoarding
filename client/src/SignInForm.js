@@ -1,14 +1,14 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { CustomerContext } from "./Reducers/CustomerReducer";
+import { PetBoardingContext } from "./PetBoardingContext";
 
 const SignInForm = () => {
   const initialLogInfo = {
     email: "",
     password: "",
   };
-  const { setSignedInUser, selectedMatch } = useContext(CustomerContext);
+  const { setSignedInUser, selectedMatch } = useContext(PetBoardingContext);
   const [logInfo, setLogInfo] = useState(initialLogInfo);
 
   const history = useHistory();
@@ -29,14 +29,13 @@ const SignInForm = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.status === 200) {
-          console.log(data);
           window.sessionStorage.setItem(
             "signedInUser",
             JSON.stringify(data.data)
           );
           setSignedInUser(data.data);
+
           if (selectedMatch) {
             history.push("/Payment");
           } else {
@@ -46,10 +45,6 @@ const SignInForm = () => {
           return <h1>An error has occured. Please check the info provided</h1>;
         }
       });
-  };
-
-  const clearForm = () => {
-    setLogInfo(initialLogInfo);
   };
   const createAccount = () => {
     history.push("/SignUp");
@@ -96,15 +91,11 @@ export default SignInForm;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding-left: 30px;
-  position: fixed;
-  padding-top: 15px;
-  height: calc(100vh - 120px);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  min-height: 100vh;
+  margin-left: 800px;
+  margin-top: 250px;
 `;
 
 const Title = styled.div`

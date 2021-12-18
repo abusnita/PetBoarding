@@ -5,14 +5,11 @@ import GlobalStyles from "./GlobalStyles";
 import Home from "./Home";
 import Header from "./Header";
 import Footer from "./Footer";
-import About from "./About";
 import Search from "./Search";
 import Profile from "./Profile";
-import CustomerSignUp from "./CustomerSignUp";
-import CustomerSignIn from "./CustomerSignIn";
-import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
-import ServiceLogIn from "./ServiceLogIn";
+import SignInStart from "./SignInStart";
+import SignInForm from "./SignInForm";
 import SideBar from "./SideBar";
 import PetRegistration from "./PetRegistration";
 import ServiceProviderInfo from "./ServiceProviderInfo";
@@ -24,6 +21,9 @@ import WebFont from "webfontloader";
 import Matches from "./Matches";
 import ConfirmBooking from "./ConfirmBooking";
 import Payment from "./Payment";
+import ConfirmationPage from "./ConfirmationPage";
+import Availabilities from "./Availabilities";
+
 function App() {
   useEffect(() => {
     WebFont.load({
@@ -50,20 +50,14 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route path="/About">
-              <About />
-            </Route>
             <Route path="/Search">
               <Search />
             </Route>
-            <Route path="/Profile">
+            <Route path="/Profile/:profileId">
               <Profile />
             </Route>
-            <Route path="/CustomerSignUp">
-              <CustomerSignUp />
-            </Route>
-            <Route path="/CustomerSignIn">
-              <CustomerSignIn />
+            <Route path="/SignInStart">
+              <SignInStart />
             </Route>
             <Route path="/PetRegistration">
               <PetRegistration />
@@ -76,9 +70,6 @@ function App() {
             </Route>
             <Route path="/ServiceProviderInfo">
               <ServiceProviderInfo />
-            </Route>
-            <Route path="/ServiceSignIn">
-              <ServiceLogIn />
             </Route>
             <Route path="/Step1_Pets">
               <Step1_Pets />
@@ -101,6 +92,12 @@ function App() {
             <Route path="/payment">
               <Payment />
             </Route>
+            <Route path="/ConfirmationPage">
+              <ConfirmationPage />
+            </Route>
+            <Route path="/Availabilities">
+              <Availabilities />
+            </Route>
           </Switch>
         </Main>
       </Wrapper>
@@ -112,15 +109,11 @@ function App() {
 const Wrapper = styled.div`
   display: flex;
   background: var(--color-cornsilk);
-  //height: calc(100vh - 160px);
-  height: fit-content;
-  //left: 160px;
 `;
 
 const Main = styled.div`
   display: flex;
   flex-direction: column;
-  //height: calc(100vh - 110px);
 `;
 
 export default App;

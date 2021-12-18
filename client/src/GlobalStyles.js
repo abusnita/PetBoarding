@@ -7,20 +7,13 @@ export default createGlobalStyle`
     --color-alice-blue: #EDF6F9;
     --color-middle-blue-green: #83C5BE;
     --color-ming: #006D77;
-    /* --color-buttons: #92593A;
-    --color-hover: #BB8B63; */
     --color-buttons: #92593A;
     --color-hover: #BF855F;
-    //--font-heading: 'Permanent Marker', Arial, Helvetica, sans-serif;
     --font-side-bar: 'Indie Flower';
     --font-body: 'Garamond';
     --padding-page: 24px;
   }
 
-  /* http://meyerweb.com/eric/tools/css/reset/
-      v2.0 | 20110126
-      License: none (public domain)
-  */
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -67,16 +60,18 @@ export default createGlobalStyle`
   color: #fff;
   font-family: var(--font-heading);
   font-size: 28px;
-  //text-align: center;
 }
 
+div {
+  margin: 0;
+  padding:0;
+  
+}
 h2
 {
   color: var(--color-alabama-crimson);
   font-family: var(--font-heading);
   font-size: 22px;
-  //text-align: center;
-
 }
 
 h3,
@@ -91,16 +86,9 @@ button {
 input {
   border: 1px solid grey;
   font-family: var(--font-body);
-}
-
-  input {
-    width: 80px;
+  width: 80px;
     padding: 3px;
     margin: 8px;
-    /* font-size: 24px;
-    height: 42px;
-    border: 2px solid var(--color-orange);
-    border-radius: 4px;
-    padding: 0 12px; */
-  }
+}
+
 `;

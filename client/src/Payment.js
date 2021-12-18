@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { CustomerContext } from "./Reducers/CustomerReducer";
+import { PetBoardingContext } from "./PetBoardingContext";
 
 const Payment = () => {
   const initialPaymentInfo = {
@@ -16,7 +16,7 @@ const Payment = () => {
     bookingCriteria,
     setBookingCriteria,
     setReservation,
-  } = useContext(CustomerContext);
+  } = useContext(PetBoardingContext);
   const [paymentInfo, setPaymentInfo] = useState(initialPaymentInfo);
 
   const history = useHistory();
@@ -25,11 +25,8 @@ const Payment = () => {
     setPaymentInfo({ ...paymentInfo, [event.target.id]: event.target.value });
   };
 
-  //let currentYear = Number(year.substring(1));
-
   let month = new Date().getMonth() + 1;
   let year = Number(new Date().getYear().toString().substring(1));
-  //let currentMonth = month + 1
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -71,27 +68,21 @@ const Payment = () => {
       });
   };
 
-  //   const clearForm = () => {
-  //     setLogInfo(initialLogInfo);
-  //   };
-  //   const createAccount = () => {
-  //     history.push("/SignUp");
-  //   };
   return (
     <Wrapper>
       <Title>
         Please verify your information and complete payment section below:
       </Title>
       <Content>
-        <NameWrapper>
+        <ValueWrapper>
           <Bold>Name:</Bold>{" "}
-          <Name>
+          <Value>
             {`${signedInUser.firstName}` + " " + `${signedInUser.lastName}`}
-          </Name>
-        </NameWrapper>
-        <AddressWrapper>
+          </Value>
+        </ValueWrapper>
+        <ValueWrapper>
           <Bold>Address:</Bold>
-          <Address>
+          <Value>
             {`${signedInUser.address.street}` +
               ", " +
               `${signedInUser.address.city}` +
@@ -101,16 +92,16 @@ const Payment = () => {
               `${signedInUser.address.postalCode}` +
               ", " +
               `${signedInUser.address.country}`}
-          </Address>
-        </AddressWrapper>
-        <PhoneNumberWrapper>
+          </Value>
+        </ValueWrapper>
+        <ValueWrapper>
           <Bold>Phone number:</Bold>
-          <PhoneNumber> {signedInUser.phoneNumber}</PhoneNumber>
-        </PhoneNumberWrapper>
-        <EmailWrapper>
+          <Value> {signedInUser.phoneNumber}</Value>
+        </ValueWrapper>
+        <ValueWrapper>
           <Bold>Email:</Bold>
-          <Email> {signedInUser.account.email}</Email>
-        </EmailWrapper>
+          <Value> {signedInUser.account.email}</Value>
+        </ValueWrapper>
       </Content>
 
       <Form onSubmit={handleSubmit}>
@@ -164,15 +155,12 @@ export default Payment;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding-left: 30px;
-  position: fixed;
-  padding-top: 15px;
-  height: calc(100vh - 120px);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  min-height: 100vh;
+  margin-left: 800px;
+  margin-top: 200px;
 `;
 const ExpiryDate = styled.input`
   height: 15px;
@@ -186,12 +174,16 @@ const ExpiryDate = styled.input`
 
 const Title = styled.div`
   display: flex;
-  justify-content: center;
-  font-size: 20px;
+  font-size: 28px;
+  font-style: italic;
+  font-weight: bold;
+  padding-left: 40px;
   padding-bottom: 40px;
-  margin-left: 60px;
-  width: 430px;
-  margin-top: 20px;
+
+  color: var(--color-ming);
+  justify-content: center;
+  width: 500px;
+  margin-bottom: 10px;
 `;
 const Form = styled.form`
   display: flex;
@@ -199,6 +191,8 @@ const Form = styled.form`
   align-items: center;
   justify-content: center;
   border: 1px solid grey;
+  margin-top: 40px;
+  height: 180px;
   width: 400px;
 `;
 
@@ -253,62 +247,22 @@ const Bottom = styled.div`
 
 const Content = styled.div`
   display: flex;
-  //text-decoration: none;
   flex-direction: column;
-  width: 370px;
-
-  //margin-left: 60px;
-  //margin: 20px 20px 20px 40px;
-  // color: white;
-  // background-color: var(--color-ming);
-  // box-shadow: 5px 10px 8px 10px #888888;
-  // padding: 15px;
-  //max-width: 400px;
+  width: 400px;
 `;
 
-const NameWrapper = styled.div`
+const ValueWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   padding-bottom: 10px;
 `;
-const Name = styled.div`
+const Value = styled.div`
   display: flex;
   justify-content: flex-start;
-  flex: 1;
-`;
-const AddressWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  padding-bottom: 10px;
-`;
-const Address = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex: 1;
-`;
-const PhoneNumberWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  padding-bottom: 10px;
-`;
-const PhoneNumber = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex: 1;
-`;
-const EmailWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  padding-bottom: 10px;
-`;
-const Email = styled.div`
-  display: flex;
-  justify-content: flex-start;
+  padding-left: 20px;
   flex: 1;
 `;
 const Div = styled.div`
-  /* display: flex;
-  justify-content: center; */
   padding-left: 10px;
   padding-right: 10px;
   text-align: center;

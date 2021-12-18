@@ -2,44 +2,47 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { NavLink, Link, useHistory } from "react-router-dom";
 import { BiUser, BiSearchAlt2 } from "react-icons/bi";
-import { CustomerContext } from "./Reducers/CustomerReducer";
+import { PetBoardingContext } from "./PetBoardingContext";
 import { FaSmile } from "react-icons/fa";
 
 const Header = () => {
   const history = useHistory();
 
-  const { signedInUser } = useContext(CustomerContext);
+  const { signedInUser } = useContext(PetBoardingContext);
   const goToHomePage = () => {
     history.push("/");
   };
   console.log(signedInUser);
   return (
     <Wrapper>
-      {/* <StyledNavLink to="/">Home</StyledNavLink> */}
       <LogoLink onClick={goToHomePage}>
         <LogoPic
           src="https://res.cloudinary.com/dclu5h6eg/image/upload/v1639498719/Pet%20Boarding/Logo-ming_zrbl1q.png"
           alt=""
         />
-        {/* <h1>Pet Boarding</h1> */}
       </LogoLink>
       <StyledNavLink to="/Search">
         <BiSearchAlt2 size={28} />
       </StyledNavLink>
       <RightSide>
         {!signedInUser ? (
-          <SignInLink to="/CustomerSignIn">Sign in</SignInLink>
+          <SignInLink to="/SignInStart">Sign in</SignInLink>
         ) : (
           <>
             <Greeting>
-              Hi {signedInUser.firstName}! <FaSmile />
+              {signedInUser.avatarUrl && (
+                <Avatar src={signedInUser.avatarUrl} />
+              )}
+              <Span>Hi {signedInUser.firstName}!</Span>
+              <FaSmile />
             </Greeting>
-            {signedInUser.avatarUrl && <Avatar src={signedInUser.avatarUrl} />}
           </>
         )}
-        <StyledNavLink to="/Profile">
-          <BiUser size={28} />
-        </StyledNavLink>
+        {signedInUser && (
+          <StyledNavLink to={`/Profile/${signedInUser._id}`}>
+            <BiUser size={28} />
+          </StyledNavLink>
+        )}
       </RightSide>
     </Wrapper>
   );
@@ -52,12 +55,17 @@ const Wrapper = styled.header`
   background: var(--color-ming);
   height: 80px;
   padding: var(--padding-page) 18px;
+  top: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
 `;
 
 const Avatar = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  margin-right: 10px;
 `;
 const LogoLink = styled.button`
   background: transparent;
@@ -70,6 +78,10 @@ const LogoLink = styled.button`
 `;
 const LogoPic = styled.img`
   height: 80px;
+`;
+
+const Span = styled.span`
+  margin-right: 10px;
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -95,7 +107,6 @@ const StyledNavLink = styled(NavLink)`
 
   &:hover {
     transform: scale(1.2);
-    //transform: translate(5px);
   }
 `;
 const SignInLink = styled(Link)`
@@ -108,10 +119,8 @@ const SignInLink = styled(Link)`
   transition: all ease 200ms;
   &:hover {
     font-size: 26px;
-    //transform: translate(5px);
   }
 `;
-
 const RightSide = styled.div`
   width: 50vw;
   display: flex;
@@ -123,7 +132,7 @@ const Greeting = styled.span`
   align-items: center;
   font-size: 24px;
   width: 220px;
-  justify-content: space-between;
+  justify-content: center;
   font-family: var(--font-body);
   color: white;
   padding-right: 40px;

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { CustomerContext } from "../Reducers/CustomerReducer";
+import { PetBoardingContext } from "../PetBoardingContext";
 
 const Step1_Pets = () => {
   const initialPets = {
@@ -9,17 +9,14 @@ const Step1_Pets = () => {
     dogs: "",
   };
 
-  //const [numberOfPets, setNumberOfPets] = useState(0);
   const [pets, setPets] = useState(initialPets);
-  const [other, setOther] = useState("");
+  const [setOther] = useState("");
   const history = useHistory();
-  const { bookingCriteria, setBookingCriteria } = useContext(CustomerContext);
+  const { bookingCriteria, setBookingCriteria } =
+    useContext(PetBoardingContext);
 
   const updatePets = (event) => {
     setPets({ ...pets, [event.target.id]: event.target.value });
-  };
-  const handleChange = (e) => {
-    setOther(e.target.value);
   };
 
   const handleSubmit = (ev) => {
@@ -29,7 +26,6 @@ const Step1_Pets = () => {
       "bookingCriteria",
       JSON.stringify(bookingCriteria)
     );
-    console.log(bookingCriteria);
     history.push("/Step2_Services");
   };
 
@@ -41,9 +37,6 @@ const Step1_Pets = () => {
           <Label>
             Cats:
             <DropDown onChange={updatePets} id="cats" value={pets.cats}>
-              {/* <option style={{ color: "grey" }} selected disabled value="">
-                Select number
-              </option> */}
               <option selected value="0">
                 0
               </option>
@@ -57,9 +50,6 @@ const Step1_Pets = () => {
           <Label>
             Dogs:
             <DropDown onChange={updatePets} id="dogs" value={pets.dogs}>
-              {/* <option style={{ color: "grey" }} selected disabled value="">
-                Select number
-              </option> */}
               <option selected value="0">
                 0
               </option>
@@ -70,25 +60,6 @@ const Step1_Pets = () => {
               <option value="5">5</option>
             </DropDown>
           </Label>
-          {/* <Label>
-              <Input
-                type="text"
-                placeholder="Other, please specify"
-                id={other}
-                value={other}
-                onChange={handleChange}
-              />
-              <DropDown onChange={updatePets} id={other} value={pets[other]}>
-                <option style={{ color: "grey" }} selected disabled value="">
-                  Select number
-                </option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </DropDown>
-            </Label> */}
         </Capabilities>
         <Bottom>
           <Button type="submit">Next</Button>
@@ -104,12 +75,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-left: 30px;
-  position: absolute;
-  padding-top: 15px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  min-height: 100vh;
+  margin-left: 800px;
 `;
 
 const Button = styled.button`
@@ -125,7 +92,6 @@ const Button = styled.button`
   transition: 200ms ease;
   cursor: pointer;
   &:hover {
-    //background-color: var(--color-hover);
     transform: scale(1.1);
     font-size: 15px;
   }
@@ -142,16 +108,22 @@ const Label = styled.label`
   font-weight: bold;
   display: flex;
   color: black;
-  width: 140px;
+  justify-content: center;
+  padding-left: 15px;
+  width: 500px;
 `;
 
 const Title = styled.div`
   display: flex;
+  font-size: 28px;
+  padding-left: 30px;
+  padding-bottom: 40px;
+  font-style: italic;
+  font-weight: bold;
+  color: var(--color-ming);
   justify-content: center;
-  padding-left: 50px;
-  width: 200px;
-  font-size: 20px;
-  padding-bottom: 20px;
+  width: 500px;
+  margin-bottom: 10px;
 `;
 
 const DropDown = styled.select`
@@ -162,21 +134,17 @@ const DropDown = styled.select`
   border-radius: 5px;
   border: 1px solid grey;
   color: grey;
-
-  /* option {
-    color: black;
-  } */
 `;
 
 const Bottom = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 20px;
-  width: 200px;
+  width: 500px;
 `;
 
 const Capabilities = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  width: 500px;
 `;
