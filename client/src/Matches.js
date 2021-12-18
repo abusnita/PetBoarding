@@ -77,7 +77,7 @@ const Wrapper = styled.header`
   min-height: 100vh;
   margin-left: 800px;
   margin-top: 40px;
-  margin-bottom: 200px;
+  margin-bottom: 100px;
 `;
 const LoadingWrapper = styled.div`
   display: flex;
