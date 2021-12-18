@@ -11,6 +11,7 @@ const {
   addReservation,
   updateProfile,
   getReservationsByUserId,
+  getUserInfo,
 } = require("./handlers");
 
 const PORT = 8000;
@@ -28,6 +29,7 @@ express()
   .put("/serviceProviderInfo/:_id", addServiceInfo)
   .post("/bookingCriteria/matches/", findMatches)
   .post("/reservations", addReservation)
+  .get("/user/:userId", getUserInfo)
   .listen(PORT, function () {
     console.info("🌍 Listening on port " + PORT);
   });

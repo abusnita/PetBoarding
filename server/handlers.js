@@ -532,6 +532,57 @@ const addServiceInfo = async (req, res) => {
   }
 };
 
+const getUserInfo = async (req, res) => {
+  //recover the user id and the pet info from the front end
+  const _id = req.params.userId;
+
+  try {
+    //open a conection to Mongo DB
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    const db = client.db("PetBoarding");
+
+    //find the customer by id
+    const customer = await db.collection("customers").findOne({ _id: _id });
+
+    //if user is found in the customers database, send back sucess message and the customer info
+    if (customer) {
+      res.status(200).json({
+        status: 200,
+        data: customer,
+        message: "User found!",
+      });
+    }
+
+    //if user is not found in the customers database, try to look for user in the service providers database
+    else {
+      const serviceProvider = await db
+        .collection("serviceProviders")
+        .findOne({ _id: _id });
+      //if user is found in the service providers database, send back sucess message and the service provider info
+      if (serviceProvider) {
+        res.status(200).json({
+          status: 200,
+          data: serviceProvider,
+          message: "User found!",
+        });
+      }
+      //if user not found in the customer database or in the service providers database, send back error message
+      else {
+        res.status(400).json({
+          status: 400,
+          message: "User not found!",
+        });
+      }
+
+      //close Mongo DB connection
+      client.close();
+    }
+  } catch (err) {
+    console.log(err.stack);
+  }
+};
+
 //this method is meant to add a picture to a customer or service provider profile
 const updateAvatar = async (req, res) => {
   //recover the user id and the picture url from the front end
@@ -842,4 +893,5 @@ module.exports = {
   findMatches,
   addReservation,
   getReservationsByUserId,
+  getUserInfo,
 };

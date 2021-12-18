@@ -1,21 +1,32 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import { PetBoardingContext } from "./PetBoardingContext";
 import moment from "moment";
 
 const Availabilities = () => {
   const { signedInUser } = useContext(PetBoardingContext);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    fetch(`/user/${signedInUser._id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setCurrentUser(data.data);
+      })
+      .catch((error) => console.log(error));
+  }, [signedInUser]);
 
   return (
     <Wrapper>
-      {signedInUser.capabilities && (
+      {currentUser && currentUser.capabilities && (
         <AvailabilitiesWrapper>
           <Title>Availabilities for the next 7 days</Title>
 
           <CalendarWrap>
             <Animal> Cats:</Animal>
             <Calendar>
-              {signedInUser.capabilities.cats.available.map((entry, index) => {
+              {currentUser.capabilities.cats.available.map((entry, index) => {
                 const date = new Date();
                 const currentDate = date.setDate(date.getDate() + index);
                 return (
@@ -32,7 +43,7 @@ const Availabilities = () => {
           <CalendarWrap>
             <Animal> Dogs:</Animal>
             <Calendar>
-              {signedInUser.capabilities.dogs.available.map((entry, index) => {
+              {currentUser.capabilities.dogs.available.map((entry, index) => {
                 const date = new Date();
                 const currentDate = date.setDate(date.getDate() + index);
                 return (
