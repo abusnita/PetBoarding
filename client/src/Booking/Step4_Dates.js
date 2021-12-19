@@ -64,7 +64,7 @@ const Step4_Dates = () => {
           dateFormat="dd-MM-yyyy"
           shouldCloseOnSelect="false"
           minDate={new Date()}
-          maxDate={addDays(new Date(), 7)}
+          maxDate={addDays(new Date(), 6)}
           onChange={handleStartDate}
         />
         <Label>End Date:</Label>
@@ -73,7 +73,7 @@ const Step4_Dates = () => {
           dateFormat="dd-MM-yyyy"
           shouldCloseOnSelect="false"
           minDate={new Date()}
-          maxDate={addDays(new Date(), 7)}
+          maxDate={addDays(new Date(), 6)}
           onChange={handleEndDate}
         />
         <Button type="submit">Next</Button>

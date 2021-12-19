@@ -75,11 +75,11 @@ const ConfirmBooking = () => {
           <Value>{bookingCriteria.serviceType}</Value>
         </ValueWrapper>
         <Section>
-          <P>
+          <Span>
             The pet
-            {Number(cats) + Number(dogs) > 1 && <p>s</p>} will be in the care
-            of:
-          </P>
+            {Number(cats) + Number(dogs) > 1 && <span>s</span>} will be in the
+            care of:
+          </Span>
           {match.company && (
             <ValueWrapper>
               <Bold>Company:</Bold>
@@ -115,26 +115,26 @@ const ConfirmBooking = () => {
         </Section>
         <Bottom>
           <Section>
-            <P>Prices:</P>
+            <Span>Prices:</Span>
             <PricesWrapper>
               {cats !== "" && (
                 <Prices>
                   {cats} cat
-                  {Number(cats) > 1 && <p>s</p>}, {days} days x{" "}
+                  {Number(cats) > 1 && <span>s</span>} x {days} days x
                   {match.capabilities.cats.price}$/day
                 </Prices>
               )}
               {dogs !== "" && (
                 <Prices>
                   {dogs} dog
-                  {Number(dogs) > 1 && <p>s</p>},{days}days x{" "}
+                  {Number(dogs) > 1 && <span>s </span>} x {days}days x{" "}
                   {match.capabilities.dogs.price}$/day
                 </Prices>
               )}
             </PricesWrapper>
           </Section>
           <TotalWrapper>
-            <P>Reservation total:</P>
+            <Span>Reservation total:</Span>
             <Total>
               {Number(cats) * days * match.capabilities.cats.price +
                 Number(dogs) * days * match.capabilities.dogs.price}
@@ -180,12 +180,13 @@ const Result = styled.form`
   padding: 15px;
   max-width: 460px;
 `;
-const P = styled.div`
+const Span = styled.span`
   padding: 15px 0px;
   font-weight: bold;
   font-style: italic;
   text-decoration: underline;
 `;
+
 const Section = styled.div`
   display: flex;
   flex-direction: column;
@@ -195,7 +196,8 @@ const TotalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  flex: 1.6;
+  width: 200px;
+  //flex: 1.6;
 `;
 
 const ValueWrapper = styled.div`
@@ -205,9 +207,11 @@ const ValueWrapper = styled.div`
 `;
 const PricesWrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  line-height: 20px;
   justify-content: space-between;
   padding-bottom: 10px;
-  flex: 1;
+  //flex: 1;
 `;
 const Value = styled.div`
   display: flex;
@@ -218,7 +222,7 @@ const Value = styled.div`
 `;
 const Prices = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   font-size: 14px;
 `;
 const Total = styled.div`

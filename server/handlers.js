@@ -723,7 +723,6 @@ const findMatches = async (req, res) => {
           provider.capabilities.cats.available
             .slice(startSlice, endSlice)
             .every((av) => {
-              console.log("cats", av);
               return av >= numCats;
             })
         ) {
@@ -734,7 +733,6 @@ const findMatches = async (req, res) => {
             provider.capabilities.dogs.available
               .slice(startSlice, endSlice)
               .every((av) => {
-                console.log("dogs", av);
                 return av >= numDogs;
               })
           ) {

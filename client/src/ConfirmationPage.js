@@ -48,8 +48,8 @@ const ConfirmationPage = () => {
           <Section>
             <P>
               The pet
-              {Number(cats) + Number(dogs) > 1 && <p>s</p>} will be in the care
-              of:
+              {Number(cats) + Number(dogs) > 1 && <span>s</span>} will be in the
+              care of:
             </P>
             {reservation.provider.company && (
               <ValueWrapper>
